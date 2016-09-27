@@ -6,10 +6,14 @@
   require 'vendor/autoload.php';
 
   // Now we're creating a whole bunch of objects
-  $rootDirectory = new DAV\FS\Directory('files');
+  $root = array(
+      new DAV\SimpleCollection("one", [ new DAV\FS\Directory("/webdav/one") ] ),
+      new DAV\SimpleCollection("two", [ new DAV\FS\Directory("/webdav/two") ] ),
+      new DAV\SimpleCollection("three", [ new DAV\FS\Directory("/webdav/deeper/three" ) ] )
+  );
 
   // The server object is responsible for making sense out of the WebDAV protocol
-  $server = new DAV\Server($rootDirectory);
+  $server = new DAV\Server($root);
 
   // If your server is not on your webroot, make sure the following line has the
   // correct information
@@ -27,3 +31,12 @@
 
   // All we need to do now, is to fire up the server
   $server->exec();
+
+
+$root = array(
+    new DAV\SimpleCollection('users'),
+    new DAV\SimpleCollection('files'),
+    new DAV\SimpleCollection('home')
+);
+
+$server = new DAV\Server($root);
