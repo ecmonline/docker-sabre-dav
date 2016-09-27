@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+exec chmod a+rwx /var/www/files
+
 if [ ! -z "$NGINX_AUTH_BASIC" ]; then
   # create .htpasswd file
   echo $NGINX_AUTH_BASIC |tr , '\n' > /etc/nginx/.htpasswd
